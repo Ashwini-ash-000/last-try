@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty Feedback</title>
+</head>
+<body>
+<h1>Submit Feedback</h1>
+<form id="feedbackForm">
+    Faculty Name: <input type="text" name="faculty_name" required><br>
+    Rating (1-5): <input type="number" name="rating" min="1" max="5" required><br>
+    Comment: <textarea name="comment"></textarea><br>
+    Your Name (Optional): <input type="text" name="submitted_by"><br>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    document.getElementById('feedbackForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const body = Object.fromEntries(formData.entries());
+
+      const res = await fetch("https://your-backend-url.onrender.com/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      alert(await res.text());
+    });
+</script>
+</body>
+</html>
